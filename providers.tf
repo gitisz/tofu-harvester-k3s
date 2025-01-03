@@ -13,11 +13,11 @@ terraform {
 }
 
 provider "harvester" {
-    kubeconfig = "~/.kube/config"
-    kubecontext = "local"
+  kubeconfig = "~/.kube/config"
+  kubecontext = "local"
 }
 
 provider "kubernetes" {
-    config_path    = "~/.kube/config"
-    config_context = "local"
+  config_path    = "~/.kube/config"
+  config_context = "local"
 }
