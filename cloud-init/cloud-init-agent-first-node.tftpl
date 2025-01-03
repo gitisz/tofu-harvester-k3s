@@ -1,0 +1,77 @@
+#cloud-config
+hostname: "${host_name_prefix}-${count}"
+
+groups:
+  - local_admins: [root]
+
+users:
+  - name: administrator
+    gecos: Administrator User
+    groups:
+      - adm
+      - audio
+      - cdrom
+      - dialout
+      - dip
+      - floppy
+      - local_admins
+      - netdev
+      - plugdev
+      - sudo
+      - video
+    lock_passwd: false
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+
+
+packages:
+  - htop
+  - curl
+  - wget
+  - jq
+  - vim
+  - net-tools
+  - git
+  - mosh
+  - gnupg
+  - make
+  - tree
+  - ufw
+  - ca-certificates
+  - qemu-guest-agent
+
+package_update: true
+package_upgrade: true
+
+runcmd:
+  - [
+      systemctl,
+      enable,
+      --now,
+      qemu-guest-agent
+    ]
+  - |
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    docker run hello-world
+  - |
+    if ! grep -q "export PATH=\"/usr/local/bin:\$PATH\"" /home/administrator/.bashrc; then
+      echo 'export PATH="/usr/local/bin:$PATH"' >> /home/administrator/.bashrc
+    fi
+  - cp /k3s/.bash_aliases /home/administrator/.bash_aliases
+  - chown administrator:administrator /home/administrator/.bash_aliases
+  - chmod 644 /home/administrator/.bash_aliases
+  - echo 'source ~/.bash_aliases' >> /home/administrator/.bashrc
+  - |
+    ############
+    # INSTALL: k3s agent
+    ############
+    curl -sfL https://get.k3s.io | K3S_URL=https://${server_alb_ip}:6443 K3S_TOKEN=${k3s_token} sh -
+
+write_files:
+  - path: /etc/sudoers.d/admin_path
+    permissions: "0440"
+    content: |
+      Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"

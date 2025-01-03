@@ -1,0 +1,33 @@
+{
+    "cSpell.words": [
+        "apiserver",
+        "cdrom",
+        "cloudinit",
+        "controlplane",
+        "daemonset",
+        "deepdiff",
+        "dialout",
+        "gecos",
+        "genericcloud",
+        "hrvstr",
+        "jetstack",
+        "kubeconfig",
+        "kubeconfigs",
+        "kubecontext",
+        "KVVERSION",
+        "letsencrypt",
+        "metallb",
+        "netdev",
+        "NOPASSWD",
+        "plugdev",
+        "pyyaml",
+        "qcow",
+        "replicaset",
+        "runcmd",
+        "servicelb",
+        "templatefile",
+        "traefik",
+        "virtio",
+        "virtualmachine"
+    ]
+}

@@ -1,0 +1,5 @@
+pyyaml==6.0.2
+click
+requests
+paramiko
+deepdiff

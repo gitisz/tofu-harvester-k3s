@@ -1,0 +1,8 @@
+.kube/*
+.k3s/*
+.ssh/*
+.terraform/*
+.env
+.terraform.lock.hcl
+
+terraform.tfstate*
